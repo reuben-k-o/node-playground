@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "assign3",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,15 +8,15 @@
     "start": "nodemon app.js"
   },
   "nodemonConfig": {
-    "ext": "js,html,json"
+    "ext": "js, json, html, css"
   },
-  "author": "Reuben Khaemba",
+  "author": "Reuben",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  },
   "dependencies": {
     "body-parser": "^1.19.1",
     "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
