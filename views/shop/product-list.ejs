@@ -28,10 +28,10 @@
             </p>
           </div>
           <div class="card__actions">
-            <a href="/products" class="btn">Details</a>
-            <form action="/add-to-cart" method="POST">
-              <button type="submit" class="btn">Add to Cart</button>
-          </form>
+            <a href="/products/<%= product.id %>" class="btn">Details</a>
+            
+            <%- include('../includes/add-to-cart.ejs', {product: product})  %>
+
           </div>
         </article>
         <% } %>
@@ -42,3 +42,7 @@
     </main>
 <%- include('../includes/end.ejs')  %>
 <!-- src="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png" -->
+<!-- https://media.istockphoto.com/photos/fresh-homemade-pizza-margherita-picture-id1278998606?s=612x612 -->
+<!-- https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80 -->
+<!-- https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80 -->
+<!-- https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80 -->

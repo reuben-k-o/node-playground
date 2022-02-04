@@ -1,1 +1,23 @@
-[{"title":"Javascript","imageUrl":"https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png","price":"34","description":"A complete guide book to deep dive on key javascript concepts"}]
+[
+  {
+    "id": "1234567890",
+    "title": "Javascript",
+    "imageUrl": "https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png",
+    "price": "34",
+    "description": "A complete guide book to deep dive on key javascript concepts"
+  },
+  {
+    "title": "Milk and Honey",
+    "imageUrl": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    "price": "25.50",
+    "description": "An amazing book to get your hands on",
+    "id": "0.16528736363009444"
+  },
+  {
+    "title": "Crazy Book",
+    "imageUrl": "https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    "price": "40.99",
+    "description": "Super Amazing!!!!",
+    "id": "0.4631306188493227"
+  }
+]

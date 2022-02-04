@@ -21,23 +21,23 @@ module.exports = class Products {
   }
 
   save() {
+    this.id = Math.random().toString();
     getProductFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
         console.log(err);
       });
     });
-    // fs.readFile(p, (err, fileContent) => {
-    //   //   console.log(fileContent);
-    //   //   let products = [];
-    //   //   if (!err) {
-    //   //     //   means product is not empty, gets the content
-    //   //     products = JSON.parse(fileContent);
-    //   //   }
-    // });
   }
 
   static fetchAll(cb) {
     getProductFromFile(cb);
+  }
+
+  static findById(id, cb) {
+    getProductFromFile((products) => {
+      const product = products.find((p) => p.id === id);
+      cb(product);
+    });
   }
 };
