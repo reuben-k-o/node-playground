@@ -13,9 +13,22 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(null, title, imageUrl, price, description);
-  product.save();
-  res.redirect("/");
+  Product.create({
+    title,
+    price,
+    imageUrl,
+    description,
+  })
+    .then((result) => {
+      console.log("Created Product");
+      // res.redirect("/");
+    })
+    .catch((err) => console.log(err));
+  // const product = new Product(null, title, imageUrl, price, description);
+  // product
+  //   .save()
+  //   .then(() => res.redirect("/"))
+  //   .catch((err) => console.log(err));
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -25,7 +38,7 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
+  Product.findByPk(prodId, (product) => {
     if (!product) res.redirect("/");
 
     res.render("admin/edit-product", {
