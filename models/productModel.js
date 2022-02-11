@@ -1,31 +1,55 @@
-const Sequelize = require("sequelize");
+const { getDb } = require("../util/database");
+class Products {
+  constructor(title, imageUrl, price, description) {
+    this.title = title;
+    this.imageUrl = imageUrl;
+    this.price = price;
+    this.description = description;
+  }
 
-const sequelize = require("../util/database");
+  save() {
+    const db = getDb();
+    return db
+      .collection("products")
+      .insertOne(this)
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  }
+}
+module.exports = Products;
 
-const Product = sequelize.define("product", {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  title: Sequelize.STRING,
-  price: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-  imageUrl: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-});
+////////////////////////////////////////////////////////////////////
+//USING SEQUELIZE
 
-module.exports = Product;
+// const Sequelize = require("sequelize");
+
+// const sequelize = require("../util/database");
+
+// const Product = sequelize.define("product", {
+//   id: {
+//     type: Sequelize.INTEGER,
+//     autoIncrement: true,
+//     allowNull: false,
+//     primaryKey: true,
+//   },
+//   title: Sequelize.STRING,
+//   price: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false,
+//   },
+//   imageUrl: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+//   description: {
+//     type: Sequelize.STRING,
+//     allowNull: false,
+//   },
+// });
+
+// module.exports = Product;
 ////////////////////////////////////////////////////////////////
+//USING SQL
 // const db = require("../util/database");
 
 // const Cart = require("./cart");
