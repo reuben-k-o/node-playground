@@ -1,5 +1,5 @@
 const { getDb } = require("../util/database");
-class Products {
+class Product {
   constructor(title, imageUrl, price, description) {
     this.title = title;
     this.imageUrl = imageUrl;
@@ -16,7 +16,7 @@ class Products {
       .catch((err) => console.log(err));
   }
 }
-module.exports = Products;
+module.exports = Product;
 
 ////////////////////////////////////////////////////////////////////
 //USING SEQUELIZE
