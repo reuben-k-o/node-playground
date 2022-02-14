@@ -1,4 +1,7 @@
 const Product = require("../models/productModel");
+const { ObjectId } = require("mongodb");
+
+// const ObjectId = mongodb.ObjectId;
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -6,6 +9,7 @@ exports.getAddProduct = (req, res, next) => {
     path: "/admin/add-product",
     editing: false,
   });
+  res.redirect("/products");
 };
 
 exports.postAddProduct = (req, res, next) => {
@@ -13,13 +17,20 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(title, imageUrl, price, description);
+  const product = new Product(
+    title,
+    imageUrl,
+    price,
+    description,
+    null,
+    req.user._id
+  );
 
   product
     .save()
     .then((result) => {
       console.log("Created Product");
-      // res.redirect("/products");
+      res.redirect("/products");
     })
     .catch((err) => console.log(err));
 
@@ -43,8 +54,7 @@ exports.getEditProduct = (req, res, next) => {
   // req.user
   //   .getProducts({ where: { id: prodId } })
   Product.findById(prodId)
-    .then((products) => {
-      const product = products[0];
+    .then((product) => {
       if (!product) res.redirect("/");
 
       res.render("admin/edit-product", {
@@ -63,14 +73,25 @@ exports.postEditProduct = (req, res, next) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
-  Product.findById(prodId)
-    .then((product) => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
-      product.description = updatedDescription;
-      return product.save();
-    })
+
+  // Product.findById(prodId)
+  // .then((product) => {
+  //   product.title = updatedTitle;
+  //   product.price = updatedPrice;
+  //   product.imageUrl = updatedImageUrl;
+  //   product.description = updatedDescription;
+  //   return product.save();
+  // })
+
+  const product = new Product(
+    updatedTitle,
+    updatedImageUrl,
+    updatedPrice,
+    updatedDescription,
+    prodId
+  );
+  product
+    .save()
     .then((result) => {
       console.log("Updated product!!!!");
       res.redirect("/admin/products");
@@ -94,11 +115,12 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findById(prodId)
-    .then((product) => {
-      return product.destroy();
-    })
-    .then((result) => {
+  // Product.findById(prodId)
+  // .then((product) => {
+  //   return product.destroy();
+  // })
+  Product.deleteById(prodId)
+    .then(() => {
       console.log("Destroyed Product!!");
       res.redirect("/admin/products");
     })
