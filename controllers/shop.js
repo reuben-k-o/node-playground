@@ -20,7 +20,10 @@ exports.postCart = (req, res, next) => {
     .then((product) => {
       return req.user.addToCart(product);
     })
-    .then((result) => console.log(result));
+    .then((result) => {
+      console.log(result);
+      res.redirect("/cart");
+    });
 
   // let fetchedCart;
   // let newQuantity = 1;
@@ -83,14 +86,11 @@ exports.getIndex = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   req.user
     .getCart()
-    .then((cart) => {
-      // console.log(cart);
-      return cart.getProducts().then((products) => {
-        res.render("shop/cart", {
-          path: "/cart",
-          pageTitle: "Your Cart",
-          products,
-        });
+    .then((products) => {
+      res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Your Cart",
+        products,
       });
     })
     .catch((err) => console.log(err));
