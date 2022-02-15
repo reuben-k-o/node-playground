@@ -1,6 +1,5 @@
 const Product = require("../models/productModel");
 const Cart = require("../models/cart");
-// const req = require("express/lib/request");
 
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
