@@ -55,6 +55,11 @@ userSchema.methods.removeFromCart = function (productId) {
   return this.save();
 };
 
+userSchema.methods.clearCart = function () {
+  this.cart = { items: [] };
+  return this.save();
+};
+
 module.exports = model("User", userSchema);
 
 // const { ObjectId } = require("mongodb");
