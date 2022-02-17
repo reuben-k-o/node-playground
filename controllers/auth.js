@@ -7,12 +7,32 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    isAuthenticated: false,
+    isAuthenticasted: false,
   });
 };
 
 exports.postLogin = (req, res, next) => {
   // res.setHeader("Set-Cookie", "loggedIn=true");
+  User.findById("620c6c1646304d04297d358d")
+    .then((user) => {
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      req.session.save((err) => {
+        res.redirect("/");
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.getSignup = (req, res, next) => {
+  res.render("auth/signup", {
+    path: "/signup",
+    pageTitle: "Sign up",
+    isAuthenticated: false,
+  });
+};
+
+exports.postSignup = (req, res, next) => {
   User.findById("620c6c1646304d04297d358d")
     .then((user) => {
       req.session.isLoggedIn = true;
