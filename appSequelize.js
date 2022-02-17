@@ -32,7 +32,7 @@ app.use(express.static(path.join(rootDir, "public")));
 app.use((req, res, next) => {
   User.findByPk(1)
     .then((user) => {
-      req.user = user;
+      req.session.user = user;
       next();
     })
     .catch((err) => console.log(err));
