@@ -25,7 +25,6 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    isAuthenticated: false,
     errorMessage: message,
     oldInput: {
       email: "",
@@ -45,7 +44,6 @@ exports.postLogin = (req, res, next) => {
     return res.status(422).render("auth/login", {
       path: "/login",
       pageTitle: "Login",
-      isAuthenticated: false,
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email,
@@ -76,13 +74,12 @@ exports.postLogin = (req, res, next) => {
           return res.status(422).render("auth/login", {
             path: "/login",
             pageTitle: "Login",
-            isAuthenticated: false,
             errorMessage: "Invalid password, kindly re-enter!!",
             oldInput: {
               email,
               password,
             },
-            validationErrors: [],
+            validationErrors: errors.array(),
           });
         })
         .catch((err) => {
@@ -102,7 +99,6 @@ exports.getSignup = (req, res, next) => {
   res.render("auth/signup", {
     path: "/signup",
     pageTitle: "Sign up",
-    isAuthenticated: false,
     errorMessage: message,
     oldInput: {
       email: "",
