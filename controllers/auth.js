@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
       api_key:
-        "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",
+        "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",
     },
   })
 );
@@ -255,3 +255,5 @@ exports.postNewPassword = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+//online-shop_key = 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
