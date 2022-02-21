@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
 const authController = require("../controllers/auth");
+const User = require("../models/user");
 
 router.get("/login", authController.getLogin);
 router.get("/signup", authController.getSignup);
@@ -43,7 +44,30 @@ router.post(
   authController.postSignup
 );
 
-router.post("/login", authController.postLogin);
+router.post(
+  "/login",
+  [
+    check("email")
+      .isEmail()
+      .withMessage("Please enter a valid email")
+      .custom((value, { req }) => {
+        return User.findOne({ email: value }).then((user) => {
+          if (!user) {
+            return Promise.reject(
+              "No account with this email address was found!"
+            );
+          }
+        });
+      }),
+    check(
+      "password",
+      "Password should contain only test and numbers and should be atleast 5 characters"
+    )
+      .isLength({ min: 5 })
+      .isAlphanumeric(),
+  ],
+  authController.postLogin
+);
 router.post("/reset", authController.postReset);
 router.post("/logout", authController.postLogout);
 router.post("/new-password", authController.postNewPassword);
