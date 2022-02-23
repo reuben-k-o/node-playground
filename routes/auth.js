@@ -27,19 +27,23 @@ router.post(
             );
           }
         });
-      }),
+      })
+      .normalizeEmail(),
     check(
       "password",
       "Please enter a password with only numbers and text and atleast 5 characters."
     )
       .isLength({ min: 5 })
-      .isAlphanumeric(),
-    check("confirmPassword").custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Passwords have to match!");
-      }
-      return true;
-    }),
+      .isAlphanumeric()
+      .trim(),
+    check("confirmPassword")
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error("Passwords have to match!");
+        }
+        return true;
+      })
+      .trim(),
   ],
   authController.postSignup
 );
@@ -58,13 +62,15 @@ router.post(
             );
           }
         });
-      }),
+      })
+      .normalizeEmail(),
     check(
       "password",
       "Password should contain only test and numbers and should be atleast 5 characters"
     )
       .isLength({ min: 5 })
-      .isAlphanumeric(),
+      .isAlphanumeric()
+      .trim(),
   ],
   authController.postLogin
 );

@@ -143,7 +143,7 @@ exports.postSignup = (req, res, next) => {
       res.redirect("/login");
       return transporter.sendMail({
         to: email,
-        from: "rubenkhaemba@gmail.com",
+        from: "Beren LLC <reuben.khaemba.112@gmail.com>",
         subject: "Signup succeeded!",
         html: "<h1>You successfully signed up</h1>",
       });
@@ -195,7 +195,7 @@ exports.postReset = (req, res, next) => {
         res.redirect("/");
         return transporter.sendMail({
           to: req.body.email,
-          from: "rubenkhaemba@gmail.com",
+          from: "Beren LLC <reuben.khaemba.112@gmail.com>",
           subject: "Reset Password",
           html: `
           <p> You requested a password reset for your account.</p>
@@ -257,3 +257,4 @@ exports.postNewPassword = (req, res, next) => {
 };
 
 //online-shop_key = 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
+//node-shop_key = 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
