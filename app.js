@@ -13,14 +13,12 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
-
-const MONGODB_URI =
-  "mongodb+srv://Reubenk:Reuben11*@cluster0.vnlvk.mongodb.net/shop";
+const config = require("./config");
 
 const app = express();
 
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: config.MONGODB_URI,
   collection: "sessions",
 });
 
@@ -67,8 +65,8 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(MONGODB_URI)
-  .then((result) => {
+  .connect(config.MONGODB_URI)
+  .then(() => {
     app.listen(3500);
   })
   .catch((err) => console.log(err));
