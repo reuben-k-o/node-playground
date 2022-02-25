@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Product = require("../models/productModel");
+const errorFunction = require("../util/catchError");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -52,20 +53,24 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect("/products");
     })
     .catch((err) => {
-      return res.status(422).render("admin/edit-product", {
-        pageTitle: "Add Products",
-        path: "/admin/add-product",
-        editing: false,
-        hasError: true,
-        errorMessage: "Database operation failed, kindly try again!",
-        validationErrors: [],
-        product: {
-          title,
-          imageUrl,
-          price,
-          description,
-        },
-      });
+      // return res.status(500).render("admin/edit-product", {
+      //   pageTitle: "Add Products",
+      //   path: "/admin/add-product",
+      //   editing: false,
+      //   hasError: true,
+      //   errorMessage: "Database operation failed, kindly try again!",
+      //   validationErrors: [],
+      //   product: {
+      //     title,
+      //     imageUrl,
+      //     price,
+      //     description,
+      //   },
+      // });
+
+      // res.redirect("/500");
+
+      errorFunction.catchError(err);
     });
 
   // req.session.user
@@ -99,7 +104,7 @@ exports.getEditProduct = (req, res, next) => {
         validationErrors: [],
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => errorFunction.catchError(err));
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -141,7 +146,7 @@ exports.postEditProduct = (req, res, next) => {
         res.redirect("/admin/products");
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => errorFunction.catchError(err));
 };
 
 exports.getProducts = (req, res, next) => {
@@ -156,7 +161,7 @@ exports.getProducts = (req, res, next) => {
         path: "/admin/products",
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => errorFunction.catchError(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
@@ -167,5 +172,5 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log("Destroyed Product!!");
       res.redirect("/admin/products");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => errorFunction.catchError(err));
 };

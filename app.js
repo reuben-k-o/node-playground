@@ -55,7 +55,8 @@ app.use((req, res, next) => {
       next();
     })
     .catch((err) => {
-      throw new Error(err);
+      // throw new Error(err);
+      next(new Error(err));
     });
 });
 
@@ -71,6 +72,14 @@ app.use(authRoutes);
 
 app.use("/500", errorController.get500);
 app.use(errorController.get404);
+
+app.use((error, req, res, next) => {
+  res.status(500).render("500", {
+    pageTitle: "Error page",
+    path: "/500",
+    isAuthenticated: req.session.isLoggedIn,
+  });
+});
 
 mongoose
   .connect(config.MONGODB_URI)
