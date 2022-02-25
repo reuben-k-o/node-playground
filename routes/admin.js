@@ -18,7 +18,6 @@ router.post(
     check("title", "Title should be Alphanumeric and atleast 5 characters long")
       .isAlphanumeric()
       .isLength({ min: 5 }),
-    check("imageUrl", "Kindly enter a valid url").isURL(),
     check("price", "Price should be a float").isFloat(),
     check(
       "description",
