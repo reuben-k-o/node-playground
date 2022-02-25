@@ -27,8 +27,7 @@ router.post(
             );
           }
         });
-      })
-      .normalizeEmail(),
+      }),
     check(
       "password",
       "Please enter a password with only numbers and text and atleast 5 characters."
@@ -62,8 +61,7 @@ router.post(
             );
           }
         });
-      })
-      .normalizeEmail(),
+      }),
     check(
       "password",
       "Password should contain only test and numbers and should be atleast 5 characters"
