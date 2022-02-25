@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const multer = require("multer");
 
 const rootDir = require("./util/path");
 const adminRoutes = require("./routes/admin");
@@ -22,12 +23,22 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "image");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
 const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
 app.set("views", "views"); //path
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ storage: fileStorage }).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
 
 app.use(
@@ -73,13 +84,12 @@ app.use(authRoutes);
 app.use("/500", errorController.get500);
 app.use(errorController.get404);
 
-app.use((error, req, res, next) => {
-  res.status(500).render("500", {
-    pageTitle: "Error page",
-    path: "/500",
-    isAuthenticated: req.session.isLoggedIn,
-  });
-});
+// app.use((error, req, res, next) => {
+//   res.status(500).render("500", {
+//     pageTitle: "Error page",
+//     path: "/500",
+//   });
+// });
 
 mongoose
   .connect(config.MONGODB_URI)
