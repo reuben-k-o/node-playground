@@ -25,7 +25,7 @@ const store = new MongoDBStore({
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "image");
+    cb(null, "images");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
@@ -54,6 +54,7 @@ app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 );
 app.use(express.static(path.join(rootDir, "public")));
+app.use("/images", express.static(path.join(rootDir, "images")));
 
 app.use(
   session({

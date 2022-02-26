@@ -28,7 +28,7 @@
           type="file" 
           name="image" 
           id="image" 
-          value=""/>
+          value="/<% if (editing || hasError){ %> <%=product.imageUrl %> <% } %>"/>
         </div>
         <div class="form-control">
           <label for="price">Price</label>

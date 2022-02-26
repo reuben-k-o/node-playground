@@ -1,6 +1,5 @@
 const { validationResult } = require("express-validator");
 const Product = require("../models/productModel");
-const errorFunction = require("../util/catchError");
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -26,7 +25,7 @@ exports.postAddProduct = (req, res, next) => {
       editing: false,
       hasError: true,
       errorMessage: "Attached file is not an image",
-      validationErrors: errors.array(),
+      validationErrors: [],
       product: {
         title,
         price,
@@ -46,13 +45,12 @@ exports.postAddProduct = (req, res, next) => {
       validationErrors: errors.array(),
       product: {
         title,
-        image,
         price,
         description,
       },
     });
   }
-
+  const imageUrl = image.path;
   const product = new Product({
     title,
     imageUrl,
@@ -131,7 +129,7 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
+  const image = req.file;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
   const errors = validationResult(req);
@@ -155,12 +153,14 @@ exports.postEditProduct = (req, res, next) => {
 
   Product.findById(prodId)
     .then((product) => {
-      if (userId.toString() !== req.user._id.toString()) {
-        return res.redirect("/");
-      }
+      // if (userId.toString() !== req.user._id.toString()) {
+      //   return res.redirect("/");
+      // }
       product.title = updatedTitle;
       product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
+      if (image) {
+        product.imageUrl = image.path;
+      }
       product.description = updatedDescription;
       return product.save().then((result) => {
         console.log("Updated product!!!!");
