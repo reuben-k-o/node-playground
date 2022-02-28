@@ -1,5 +1,8 @@
 const path = require("path");
 const fs = require("fs");
+
+const PDFDocument = require("pdfkit");
+
 const Product = require("../models/productModel");
 const Order = require("../models/order");
 
@@ -169,13 +172,43 @@ exports.getInvoice = (req, res, next) => {
       //   res.send(data);
       // });
 
-      const file = fs.createReadStream(invoicePath);
+      // const file = fs.createReadStream(invoicePath);
+      // res.setHeader("Content-Type", "application/pdf");
+      // res.setHeader(
+      //   "Content-Disposition",
+      //   'inline; filename="' + invoiceName + '"'
+      // );
+      // file.pipe(res);
+
+      const pdfDoc = new PDFDocument();
+
       res.setHeader("Content-Type", "application/pdf");
       res.setHeader(
         "Content-Disposition",
         'inline; filename="' + invoiceName + '"'
       );
-      file.pipe(res);
+
+      pdfDoc.pipe(fs.createWriteStream(invoicePath));
+      pdfDoc.pipe(res);
+
+      pdfDoc.fontSize(26).text("Invoice", {
+        underline: true,
+      });
+      pdfDoc.text("-------------------------------------------------");
+      let totalPrice = 0;
+      order.products.forEach((prod) => {
+        totalPrice += prod.quantity * prod.product.price;
+        pdfDoc.text(
+          prod.product.title +
+            "-" +
+            prod.quantity +
+            "x" +
+            "$" +
+            prod.product.price
+        );
+      });
+      pdfDoc.text(`Total Price : $${totalPrice}`);
+      pdfDoc.end();
     })
     .catch((err) => next(err));
 };
