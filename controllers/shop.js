@@ -5,6 +5,7 @@ const PDFDocument = require("pdfkit");
 
 const Product = require("../models/productModel");
 const Order = require("../models/order");
+const fileHelper = require("../util/file");
 
 exports.getProducts = (req, res, next) => {
   Product.find()
