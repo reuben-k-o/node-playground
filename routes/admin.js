@@ -15,8 +15,8 @@ router.post(
   "/add-product",
   isAuth,
   [
-    check("title", "Title should be Alphanumeric and atleast 5 characters long")
-      .isAlphanumeric()
+    check("title", "Title should be atleast 5 characters long")
+      .isString()
       .isLength({ min: 5 }),
     check("price", "Price should be a float").isFloat(),
     check(
