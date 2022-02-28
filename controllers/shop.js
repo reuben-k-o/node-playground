@@ -198,16 +198,15 @@ exports.getInvoice = (req, res, next) => {
       let totalPrice = 0;
       order.products.forEach((prod) => {
         totalPrice += prod.quantity * prod.product.price;
-        pdfDoc.text(
-          prod.product.title +
-            "-" +
-            prod.quantity +
-            "x" +
-            "$" +
-            prod.product.price
-        );
+        pdfDoc.fontSize(16).text(`
+            ${prod.product.title}   -   ${prod.quantity}   x  $${prod.product.price}
+             
+              `);
       });
-      pdfDoc.text(`Total Price : $${totalPrice}`);
+      pdfDoc
+        .fontSize(26)
+        .text("--------------------------------------------------");
+      pdfDoc.fontSize(20).text(`Total Price : $${totalPrice}`);
       pdfDoc.end();
     })
     .catch((err) => next(err));
