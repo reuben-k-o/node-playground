@@ -160,6 +160,7 @@ exports.postEditProduct = (req, res, next) => {
       product.title = updatedTitle;
       product.price = updatedPrice;
       if (image) {
+        fileHelper.deleteFile(product.imageUrl);
         product.imageUrl = image.path;
       }
       product.description = updatedDescription;
@@ -204,10 +205,8 @@ exports.postDeleteProduct = (req, res, next) => {
         return next(new Error("No Product found!"));
       }
       fileHelper.deleteFile(product.imageUrl);
+      return Product.deleteOne({ _id: prodId, userId: req.user._id });
     })
-    .catch((err) => next(err));
-
-  Product.deleteOne({ _id: prodId, userId: req.user._id })
     .then(() => {
       console.log("Destroyed Product!!");
       res.redirect("/admin/products");
