@@ -20,19 +20,6 @@ exports.getProducts = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.postCart = (req, res, next) => {
-  const prodId = req.body.productId;
-
-  Product.findById(prodId)
-    .then((product) => {
-      return req.user.addToCart(product);
-    })
-    .then((result) => {
-      console.log(result);
-      res.redirect("/cart");
-    });
-};
-
 exports.getProductId = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
@@ -92,6 +79,19 @@ exports.getCart = (req, res, next) => {
   //     });
   //   });
   // });
+};
+
+exports.postCart = (req, res, next) => {
+  const prodId = req.body.productId;
+
+  Product.findById(prodId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/cart");
+    });
 };
 
 exports.postDeleteCartProduct = (req, res, next) => {
