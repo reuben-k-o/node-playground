@@ -7,7 +7,6 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
-const stripe = require("stripe")(config.STRIPE_SEC_KEY);
 
 const rootDir = require("./util/path");
 const adminRoutes = require("./routes/admin");
