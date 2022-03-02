@@ -1,5 +1,6 @@
 node_modules
 config.js
+configejs.js
 repo_cleanup
 images
 util/catchError.js
