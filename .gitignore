@@ -3,4 +3,6 @@ config.js
 configejs.js
 repo_cleanup
 images
+nodemon.json
+
 util/catchError.js
