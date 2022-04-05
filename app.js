@@ -1,4 +1,6 @@
 const path = require("path");
+const fs = require("fs");
+
 const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,6 +11,7 @@ const flash = require("connect-flash");
 const multer = require("multer");
 const helmet = require("helmet");
 const compression = require("compression");
+const morgan = require("morgan");
 
 const rootDir = require("./util/path");
 const adminRoutes = require("./routes/admin");
@@ -48,12 +51,18 @@ const fileFilter = (req, file, cb) => {
 };
 
 const csrfProtection = csrf();
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
 
 app.set("view engine", "ejs");
 app.set("views", "views"); //path
 
 app.use(helmet());
 app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
