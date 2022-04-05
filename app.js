@@ -20,7 +20,7 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
-const config = require("./config");
+// const config = require("./config");
 
 const app = express();
 const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster-one.m1q6c.mongodb.net/${process.env.MONGODB_DATABASE}`;
@@ -50,8 +50,8 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-const privateKey = fs.readFileSync("server.key");
-const certificate = fs.readFileSync("server.cert");
+// const privateKey = fs.readFileSync("server.key");
+// const certificate = fs.readFileSync("server.cert");
 
 const csrfProtection = csrf();
 const accessLogStream = fs.createWriteStream(
@@ -126,8 +126,9 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
-    https
-      .createServer({ key: privateKey, cert: certificate }, app)
-      .listen(3500);
+    // https
+    //   .createServer({ key: privateKey, cert: certificate }, app)
+    //   .listen(3500);
+    app.listen(process.env.PORT || 3500);
   })
   .catch((err) => console.log(err));
