@@ -23,10 +23,10 @@ const User = require("./models/user");
 // const config = require("./config");
 
 const app = express();
-const MONGODB_URI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster-one.m1q6c.mongodb.net/${process.env.MONGODB_DATABASE}`;
+const MONGODB_URL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster-one.m1q6c.mongodb.net/${process.env.MONGODB_DATABASE}`;
 
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: MONGODB_URL,
   collection: "sessions",
 });
 
@@ -124,7 +124,7 @@ app.use(errorController.get404);
 // });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URL)
   .then(() => {
     // https
     //   .createServer({ key: privateKey, cert: certificate }, app)
