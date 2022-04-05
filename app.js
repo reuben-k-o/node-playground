@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const https = require("https");
 
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -49,6 +50,8 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+const privateKey = fs.readFileSync("server.key");
+const certificate = fs.readFileSync("server.cert");
 
 const csrfProtection = csrf();
 const accessLogStream = fs.createWriteStream(
@@ -123,6 +126,8 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
-    app.listen(3500);
+    https
+      .createServer({ key: privateKey, cert: certificate }, app)
+      .listen(3500);
   })
   .catch((err) => console.log(err));
