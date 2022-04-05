@@ -6,3 +6,6 @@ images
 nodemon.json
 
 util/catchError.js
+server.key
+server.cert
+access.log
